@@ -12,11 +12,15 @@ const app = express()
 //Configurar CORS
 app.use(cors())
 
+//lectura y parse del body
+
+app.use(express.json())
+
 //base de datos
 
 dbConnection();
 
-console.log(process.env);
+// console.log(process.env);
 
 // WjU8kNUYN5F1NKrP
 // mean_user
@@ -26,16 +30,16 @@ console.log(process.env);
 // aqui vamos a crear la primera ruta de mi aplicacion, para comprender como son las consultas que se hacen a los diferentes
 // endpoint
 
+// en el video 106 vamos separar lo qur son las rutas y el controlador
+//Rutas
+app.use('/api/usuarios', require('./routes/usuarios'));
 
-app.get( '/', (req,res)=>{
+//cracion  de la ruta para el login
+
+app.use('/api/login', require('./routes/auth')); //esta es la ruta del login de mi aplicacion
+
     
-    // req: es lo que  se solicita, ahi viene la informacion de los header, que cliente fue,  entre otras cosas
-    // res: es lo que nosotros vamos o el servidor va a responderle  al cliente que acaba de solicitar algo en el backend 
-    res.json({
-        ok: true,
-        msg:'todo salio bien'
-    })
-})
+
 
 app.listen(process.env.PORT, ()=> {
     console.log('puerto corriendo en puerto' + process.env.PORT);
