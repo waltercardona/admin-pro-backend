@@ -15,13 +15,29 @@ const { generarJWT } = require('../helpers/jwt')
 //esta es la logica que va ha hacer cada una de mis rutas
 
 const getUsuarios = async(req,res )=>{
+    // vamos a hacer una paginacion
+
+    const desde = Number(req.query.desde) || 0
+    
     //aqui obtengo los usarios que estan en la base de datos
-    const usuarios = await Usuario.find({}, 'nombre role  email password google')
+    // const usuarios = await Usuario.find({}, 'nombre role  email password google')
+    //                               .skip(desde)
+    //                               .limit(5)
+    // const total = await Usuario.count();
+
+   const [ usuarios, total] = await Promise.all([
+        Usuario
+            .find({}, 'nombre role  email password google img')
+            .skip(desde)
+            .limit(5),
+        Usuario.count()
+    ])
     // req: es lo que  se solicita, ahi viene la informacion de los header, que cliente fue,  entre otras cosas
     // res: es lo que nosotros vamos o el servidor va a responderle  al cliente que acaba de solicitar algo en el backend 
     res.json({
        ok: true,
        usuarios,
+       total
       
     })
 }

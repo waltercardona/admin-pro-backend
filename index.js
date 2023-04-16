@@ -32,11 +32,24 @@ dbConnection();
 
 // en el video 106 vamos separar lo qur son las rutas y el controlador
 //Rutas
+
+//cracion  de la ruta para el usuarios
 app.use('/api/usuarios', require('./routes/usuarios'));
 
-//cracion  de la ruta para el login
+//cracion  de la ruta para el hospitales
+app.use('/api/hospitales', require('./routes/hospitales')); //esta es la ruta del hospitales de mi aplicacion
 
+//cracion  de la ruta para el medicos
+app.use('/api/medicos', require('./routes/medicos')); //esta es la ruta del medicos de mi aplicacion
+
+//cracion  de la ruta para el login
 app.use('/api/login', require('./routes/auth')); //esta es la ruta del login de mi aplicacion
+
+//creacion de la ruta para busqueda
+app.use('/api/todo', require('./routes/busquedas')); //esta es la ruta del login de mi aplicacion
+
+app.use('/api/upload', require('./routes/uploads'));
+
 
     
 
