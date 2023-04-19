@@ -12,6 +12,9 @@ const app = express()
 //Configurar CORS
 app.use(cors())
 
+//carpeta publica
+app.use(express.static('public'))
+
 //lectura y parse del body
 
 app.use(express.json())
@@ -55,5 +58,5 @@ app.use('/api/upload', require('./routes/uploads'));
 
 
 app.listen(process.env.PORT, ()=> {
-    console.log('puerto corriendo en puerto' + process.env.PORT);
+    console.log('puerto corriendo en puerto ' + process.env.PORT);
 });
