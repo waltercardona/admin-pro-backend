@@ -45,18 +45,87 @@ const medico = new Medicos({
 }
 
 
-const actualizarMedicos = (req, res = response) => {
-    res.json({
-        ok:true,
-        msg:'actualizarMedicos'
-    })
+const actualizarMedicos = async(req, res = response) => {
+   
+    const medicoId = req.params.id
+
+    const uid = req.uid
+
+   
+
+    try {
+
+        const medico = await Medicos.findById(medicoId)
+        if (!medico) {
+            return res.status(404).json({
+                ok:true,
+                msg:'medico no encontrado por ese id'
+            })
+            
+        }
+        //si llega a este punto es por que el medico existe nos preparamos para actualizarlo
+
+        //actualizar medico
+
+        const cambiosmedicos = {
+            ...req.body,
+            usuario: uid
+        }
+
+        const medicoActualizado = await Medicos.findByIdAndUpdate(medicoId,cambiosmedicos, {new:true})
+
+        res.json({
+            ok:true,
+            medicoActualizado
+        })
+      
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok:false,
+            msg:'hable con el admistrador'
+        })
+
+    }
+  
+
 }
 
-const borrarMedicos = (req, res = response) => {
-    res.json({
-        ok:true,
-        msg:'borrarMedicos'
-    })
+const borrarMedicos = async(req, res = response) => {
+    const medicoId = req.params.id
+
+    try {
+
+        const medico = await Medicos.findById(medicoId)
+        if (!medico) {
+            return res.status(404).json({
+                ok:true,
+                msg:'medico no encontrado por ese id'
+            })
+            
+        }
+        //si llega a este punto es por que el medico existe nos preparamos para actualizarlo
+
+        //borrar medico
+
+        const medicoborrado = await Medicos.findOneAndDelete(medicoId)
+
+        res.json({
+            ok:true,
+            medicoborrado,
+            msg:'medico borrado'
+        })
+      
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok:false,
+            msg:'hable con el admistrador'
+        })
+
+    }
 }
 
 
