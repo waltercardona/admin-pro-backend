@@ -60,7 +60,7 @@ const crearUsuarios = async(req ,res = response) => {
     if (existeEmail) {
         return res.status(400).json({
             ok: false,
-            msg:'correo ya existe'
+            msg:' El correo ya existe'
         })
     }
 

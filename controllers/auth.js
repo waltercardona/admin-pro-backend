@@ -37,7 +37,7 @@ const login = async(req, res = response) => {
         if (!validarpassword) {
             return res.status(400).json({
                 ok:false,
-                msg:'las contraseñas no son las mismas'
+                msg:'Contraseña no valida'
             })
             
         }
