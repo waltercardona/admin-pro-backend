@@ -9,7 +9,7 @@ const Hospital = require('../models/hospital')
 const getHospitales = async(req, res = response) => {
 
     const hospitales = await Hospital.find()
-                                     .populate('usuario', 'nombre')
+                                     .populate('usuario','nombre')
     res.json({
         ok:true,
         hospitales
@@ -115,7 +115,7 @@ const borrarHospitales = async(req, res = response) => {
         //borrar hospital hospital
 
       
-        await Hospital.findOneAndDelete(hospitalId)
+        await Hospital.findOneAndDelete({_id:hospitalId})
         
 
 

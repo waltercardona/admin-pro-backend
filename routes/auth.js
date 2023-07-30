@@ -29,7 +29,8 @@ router.post('/',
      ], validarCampos,
      googleSingIn //controlador 
    )
-   router.get('/revalidarToken', validarJWT ,    revalidarToken //controlador 
+
+   router.get('/revalidarToken', validarJWT , revalidarToken //controlador 
    )
 
 

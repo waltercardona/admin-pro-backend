@@ -20,18 +20,18 @@ const getUsuarios = async(req,res )=>{
     const desde = Number(req.query.desde) || 0
     
     //aqui obtengo los usarios que estan en la base de datos
-    // const usuarios = await Usuario.find({}, 'nombre role  email password google')
-    //                               .skip(desde)
-    //                               .limit(5)
-    // const total = await Usuario.count();
+    const usuarios = await Usuario.find({}, 'nombre role  email password google img')
+                                  .skip(desde)
+                                  .limit(5)
+    const total = await Usuario.count();
 
-   const [ usuarios, total] = await Promise.all([
-        Usuario
-            .find({}, 'nombre role  email password google img')
-            .skip(desde)
-            .limit(5),
-        Usuario.count()
-    ])
+//    const [ usuarios, total] = await Promise.all([
+//         Usuario
+//             .find({}, 'nombre role  email password google img')
+//             .skip(desde),
+//             limit(5),
+//         Usuario.count()
+//     ])
     // req: es lo que  se solicita, ahi viene la informacion de los header, que cliente fue,  entre otras cosas
     // res: es lo que nosotros vamos o el servidor va a responderle  al cliente que acaba de solicitar algo en el backend 
     res.json({
@@ -52,7 +52,7 @@ const crearUsuarios = async(req ,res = response) => {
    const { email,password } = req.body
 
 
-
+//    await Hospital.findOneAndRemove({_id:hospitalId})
     //con esto estamos validando que el correo no exista dos veces
    try {
     // aqui obtenemos un registro para compararlo
@@ -142,8 +142,15 @@ const actualizarUsuario = async(req, res= response) => {
         // delete campos.google; ya no es necesario estos dos campos ya que 
         //los desestructure arriba en la linea 91
         
-        
-        campos.email = email;
+        if (!usuarioDB.google) {
+            campos.email = email;
+            
+        }else if(usuarioDB.email !== email){
+            return res.status(400).json({
+            ok:false,
+            msg: 'Usuarios de google no pueden cambiar su correo '
+        })
+        }
         const usuarioActualizado = await Usuario.findByIdAndUpdate(uid, campos, {new:true})
         
         res.json({
