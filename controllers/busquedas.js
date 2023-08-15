@@ -24,7 +24,7 @@ const getBusquedas = async(req, res = response)=> {
 //con esto hacemos la busqueda de manera general
 const [usuarios, medicos, hospitales] = await Promise.all([
     Usuario.find({nombre:regex}),
-    Medicos.find({nombre:regex}),
+    Medico.find({nombre:regex}),
     Hospitales.find({nombre:regex})
 ])
 

@@ -16,9 +16,9 @@ router.post('/',
 //se validan (middlewares)los campos para que se llenen los campos y no esten vacios
      [
        check('email', 'el email es requerio').isEmail(),
-       check('password', 'la contraseña es requerida').not().isEmpty()
+       check('password', 'la contraseña es requerida').not().isEmpty(),
+       validarCampos,
      ], 
-     validarCampos,
      login //controlador 
    )
 
